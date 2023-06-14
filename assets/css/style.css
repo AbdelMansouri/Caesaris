@@ -1,0 +1,110 @@
+@font-face {
+  font-family: "Gotesk";
+  src: url("../fonts/SpaceGrotesk-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Abhaya";
+  src: url("../fonts/AbhayaLibre-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Abhaya-Bold";
+  src: url("../fonts/AbhayaLibre-Bold.ttf") format("truetype");
+}
+
+/* ----------------Style général--------------------- */
+/* Font */
+html body h1,
+html body h2,
+html body h3,
+html body h4,
+html body h5 {
+  font-family: "Abhaya-Bold", serif;
+  font-size: 3.8rem;
+}
+
+html body {
+  font-family: "Gotesk", sans-serif;
+}
+/* Boutons */
+body .btn-primary {
+  background-color: rgb(4, 8, 58);
+  border: none;
+  border-radius: 0;
+}
+
+body .btn-primary:hover {
+  background-color: rgb(8, 14, 106);
+}
+
+body .btn-secondary {
+  background-color: rgb(254, 173, 32);
+  color: black;
+  border: none;
+  border-radius: 0;
+}
+
+body .btn-secondary:hover {
+  background-color: rgb(228, 174, 3);
+  color: rgb(8, 14, 106);
+}
+
+/* ----------------HEADER--------------------- */
+#header {
+  background-color: white;
+}
+
+.logo-navbar {
+  max-height: 110px;
+}
+
+.inscription-error {
+  color: red;
+  font-size: 0.9rem;
+}
+
+/* ----------------CONNEXION--------------------- */
+#sign-in-form {
+  min-height: calc(100vh - 471px);
+}
+
+/* ----------------CONTENT--------------------- */
+
+#my-account .card img {
+  max-height: 300px;
+  max-width: 300px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+#my-account .card .card-header h3 {
+  font-size: 2rem;
+}
+#my-account .card .card-body {
+  font-size: 1.2rem;
+}
+
+#my-account .user-information {
+  font-size: 0.7rem;
+  font-style: italic;
+}
+
+/* ----------------FOOTER--------------------- */
+#footer {
+  background-color: rgb(4, 8, 58);
+  color: white;
+}
+
+#footer .container h5 {
+  font-size: 2.4rem;
+  font-weight: bold;
+}
+
+#footer a {
+  color: white;
+}
+
+#footer .info p {
+  font-size: 0.8rem;
+}
