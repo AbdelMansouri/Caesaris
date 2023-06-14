@@ -15,3 +15,6 @@ define("URL", "http://localhost/DORANCO/PHP/eshop/");
 
 // lancement de la session utilisateur
 session_start();
+if (!strpos($_SERVER['REQUEST_URI'], 'edit_article.php') && isset($_SESSION["editArticle"])) {
+  unset($_SESSION["editArticle"]);
+}

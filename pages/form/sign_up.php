@@ -142,7 +142,7 @@ if (isset($_POST["email"]) && isset($_POST["pseudo"]) && isset($_POST["email-con
   $villeError = secureHtml($villeError);
   $cpError = secureHtml($cpError);
 
-  // Vérification globale des erreurs
+  // Insertion dans la BDD
   if (empty($pseudoError) && empty($emailError) && empty($mdpError) && empty($prenomError) && empty($nomError) && empty($sexeError) && empty($adresseError) && empty($villeError) && empty($cpError)) {
 
     $reponse = $pdo->prepare("INSERT INTO membre (pseudo, mdp, nom, prenom, email, sexe, ville, cp, adresse, statut) VALUES (:pseudo, :mdp, :nom, :prenom, :email, :sexe, :ville, :cp, :adresse, :statut)");
@@ -165,7 +165,7 @@ require_once("../../inc/header.inc.php");
 require_once("../../inc/nav.inc.php");
 ?>
 
-<body>
+
   <div class="container">
     <div class="row">
       <div class="col-6 mx-auto mt-5">
@@ -242,7 +242,7 @@ require_once("../../inc/nav.inc.php");
       </div>
     </div>
   </div>
-</body>
+
 
 <?php
 require_once("../../inc/footer.inc.php");

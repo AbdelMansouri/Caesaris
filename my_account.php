@@ -2,7 +2,7 @@
 require_once("inc/init.inc.php");
 require_once("inc/functions.inc.php");
 $title = "- Mon Compte";
-if (!is_user() || !is_admin()) {
+if (!(is_user() || is_admin())) {
   header("Location: " . URL . "pages/form/sign_in.php");
   exit;
 }
@@ -46,10 +46,11 @@ if (isset($_POST["prenom"]) && isset($_POST["nom"]) && isset($_POST["sexe"])) {
   // Vérification globale des erreurs
   if (empty($prenomError) && empty($nomError) && empty($sexeError)) {
 
-    $reponse = $pdo->prepare("UPDATE membre SET nom = :nom, prenom = :prenom, sexe = :sexe");
+    $reponse = $pdo->prepare("UPDATE membre SET nom = :nom, prenom = :prenom, sexe = :sexe WHERE id_membre = :id_membre");
     $reponse->bindParam(':nom', $nom, PDO::PARAM_STR);
     $reponse->bindParam(':prenom', $prenom, PDO::PARAM_STR);
     $reponse->bindParam(':sexe', $sexe, PDO::PARAM_STR);
+    $reponse->bindParam(':id_membre', $_SESSION["userData"]["id_membre"], PDO::PARAM_INT);
     $reponse->execute();
     $_SESSION["userData"]["nom"] = $nom;
     $_SESSION["userData"]["prenom"] = $prenom;
@@ -88,9 +89,10 @@ if (isset($_POST["prenom"]) && isset($_POST["nom"]) && isset($_POST["sexe"])) {
 //   // Vérification globale des erreurs
 //   if (empty($pseudoError) && empty($emailError) && empty($mdpError)) {
 
-//     $reponse = $pdo->prepare("UPDATE membre SET pseudo = :pseudo, email = :email");
+//     $reponse = $pdo->prepare("UPDATE membre SET pseudo = :pseudo, email = :email WHERE id_membre = :id_membre");
 //     $reponse->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 //     $reponse->bindParam(':email', $email, PDO::PARAM_STR);
+//     $reponse->bindParam(':id_membre', $_SESSION["userData"]["id_membre"], PDO::PARAM_INT);
 //     $reponse->execute();
 //     $_SESSION["userData"]["pseudo"] = $pseudo;
 //     $_SESSION["userData"]["email"] = $email;
@@ -125,10 +127,11 @@ if (isset($_POST["adresse"]) && isset($_POST["ville"]) && isset($_POST["cp"])) {
 
   // Vérification globale des erreurs
   if (empty($adresseError) && empty($villeError) && empty($cpError)) {
-    $reponse = $pdo->prepare("UPDATE membre SET adresse = :adresse, ville = :ville, cp = :cp");
+    $reponse = $pdo->prepare("UPDATE membre SET adresse = :adresse, ville = :ville, cp = :cp WHERE id_membre = :id_membre");
     $reponse->bindParam(':adresse', $adresse, PDO::PARAM_STR);
     $reponse->bindParam(':ville', $ville, PDO::PARAM_STR);
     $reponse->bindParam(':cp', $cp, PDO::PARAM_STR);
+    $reponse->bindParam(':id_membre', $_SESSION["userData"]["id_membre"], PDO::PARAM_INT);
     $reponse->execute();
     $_SESSION["userData"]["adresse"] = $adresse;
     $_SESSION["userData"]["ville"] = $ville;
@@ -141,7 +144,7 @@ require_once("inc/header.inc.php");
 require_once("inc/nav.inc.php");
 ?>
 
-<body>
+
   <div class="container" id="my-account">
     <div class="col-6 mx-auto">
       <h1 class="text-center mb-3">Mon compte</h1>
@@ -219,7 +222,7 @@ require_once("inc/nav.inc.php");
                 <input type="text" name="ville" value="<?= $_SESSION["userData"]['ville'] ?>" class="form-control">
                 <div class="inscription-error"><?= $villeError ?></div>
                 <p class="mb-0 fw-bold">Code-Postal :</p>
-                <input type="text" name="cp" value="<?= $_SESSION["userData"]['cp']?>" class="form-control">
+                <input type="text" name="cp" value="<?= $_SESSION["userData"]['cp'] ?>" class="form-control">
                 <div class="inscription-error"><?= $cpError ?></div>
               </div>
           </div>
@@ -249,21 +252,21 @@ require_once("inc/nav.inc.php");
 
 
       <div class="card rounded-0 mb-5">
-          <div class="card-header fw-bold p-3">
-            <h3>Connexion et sécurité</h3>
-          </div>
-          <div class="card-body d-flex align-items-center">
-              <div class="ms-5">
-                <p class="mb-0 fw-bold"> Pseudo :</p>
-                <p><?= $_SESSION["userData"]['pseudo'] ?></p>
-                <p class="mb-0 fw-bold"> E-mail :</p>
-                <p><?= $_SESSION["userData"]['email'] ?></p>
-                <p class="mb-0 fw-bold"> Mot de passe :</p>
-                <p>*******</p>
-                <p class="user-information">Merci de contacter le support pour modifier vos informations de connexion : contact@contact.fr</p>
-              </div>
+        <div class="card-header fw-bold p-3">
+          <h3>Connexion et sécurité</h3>
+        </div>
+        <div class="card-body d-flex align-items-center">
+          <div class="ms-5">
+            <p class="mb-0 fw-bold"> Pseudo :</p>
+            <p><?= $_SESSION["userData"]['pseudo'] ?></p>
+            <p class="mb-0 fw-bold"> E-mail :</p>
+            <p><?= $_SESSION["userData"]['email'] ?></p>
+            <p class="mb-0 fw-bold"> Mot de passe :</p>
+            <p>*******</p>
+            <p class="user-information">Merci de contacter le support pour modifier vos informations de connexion : contact@contact.fr</p>
           </div>
         </div>
+      </div>
       <!-- <?php if (isset($_GET['edit']) && $_GET['edit'] === 'security') : ?>
         <div class="card rounded-0 mb-5">
           <div class="card-header fw-bold p-3">
@@ -308,7 +311,7 @@ require_once("inc/nav.inc.php");
       <?php endif; ?> -->
     </div>
   </div>
-</body>
+
 
 <?php
 require_once("inc/footer.inc.php");

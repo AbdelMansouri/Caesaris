@@ -1,3 +1,4 @@
+<body>
 <header id="header">
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
@@ -27,17 +28,19 @@
               <a class="nav-link" href="<?= URL ?>pages/form/sign_up.php">Inscription</a>
             </li>
           <?php endif; ?>
-          <?php if (is_user()) : ?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= URL ?>my_account.php">Mon Compte</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= URL ?>pages/form/logout.php">Déconnexion</a>
-            </li>
-          <?php endif; ?>
           <?php if (is_admin()) : ?>
             <li class="nav-item">
-              <a class="nav-link" href="">Panneau de configuration</a>
+              <a class="nav-link" href="<?= URL ?>pages/admin/gestion_article.php">Panneau de configuration</a>
+            </li>
+          <?php endif; ?>
+          <?php if (is_user()) : ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?= URL ?>pages/admin/">Mon Panier</a>
+            </li>
+          <?php endif; ?>
+          <?php if (is_user() || is_admin()) : ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?= URL ?>my_account.php">Mon Compte</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="<?= URL ?>pages/form/logout.php">Déconnexion</a>
@@ -47,5 +50,5 @@
       </div>
     </nav>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  
 </header>

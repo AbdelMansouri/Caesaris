@@ -31,7 +31,7 @@ require_once("../../inc/header.inc.php");
 require_once("../../inc/nav.inc.php");
 ?>
 
-<body>
+
   <div class="container" id="sign-in-form">
     <div class="row">
       <div class="col-6 mx-auto mt-5">
@@ -55,7 +55,7 @@ require_once("../../inc/nav.inc.php");
       </div>
     </div>
   </div>
-</body>
+
 
 <?php
 require_once("../../inc/footer.inc.php");

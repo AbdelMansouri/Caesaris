@@ -13,6 +13,18 @@
   src: url("../fonts/AbhayaLibre-Bold.ttf") format("truetype");
 }
 
+
+/* Pour masquer les boutons de défilement */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-moz-number-spin-box {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+
 /* ----------------Style général--------------------- */
 /* Font */
 html body h1,
@@ -48,6 +60,11 @@ body .btn-secondary {
 body .btn-secondary:hover {
   background-color: rgb(228, 174, 3);
   color: rgb(8, 14, 106);
+}
+
+body .btn-danger {
+  border: none;
+  border-radius: 0;
 }
 
 /* ----------------HEADER--------------------- */
@@ -88,6 +105,25 @@ body .btn-secondary:hover {
 #my-account .user-information {
   font-size: 0.7rem;
   font-style: italic;
+}
+
+#gestion-article .value-form {
+  line-height: 150px;
+  font-size: 1.2rem;
+}
+
+#gestion-article .infos-form {
+  font-size: 1.2rem;
+}
+
+.apercu-article-image {
+  height: 220px;
+  width: 220px;
+}
+
+#new-article img {
+  max-height: 220px;
+  max-width: 220px;
 }
 
 /* ----------------FOOTER--------------------- */
