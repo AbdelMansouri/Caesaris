@@ -24,9 +24,7 @@ require_once("../../inc/nav.inc.php");
     <h1 class="text-center mb-3">Gestion de la boutique</h1>
     <div class="container">
       <div class="card mb-5">
-        <div class="card-header">
-          <a href="<?= URL ?>pages/admin/edit_article.php" class="btn btn-secondary w-25 m-3">Ajouter un article</a>
-        </div>
+          <a href="<?= URL ?>pages/admin/edit_article.php" class="btn btn-secondary w-25 m-3 mx-auto">Ajouter un article</a>
       </div>
     </div>
     <div class="table-responsive ps-5 pe-5">

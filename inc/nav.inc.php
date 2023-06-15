@@ -15,7 +15,7 @@
             <a class="nav-link" href="<?= URL ?>accueil.php">Accueil</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Boutique</a>
+            <a class="nav-link" href="<?= URL ?>shop.php">Boutique</a>
           </li>
         </ul>
 
@@ -35,7 +35,7 @@
           <?php endif; ?>
           <?php if (is_user()) : ?>
             <li class="nav-item">
-              <a class="nav-link" href="<?= URL ?>pages/admin/">Mon Panier</a>
+              <a class="nav-link" href="<?= URL ?>pages/user/cart.php">Mon Panier</a>
             </li>
           <?php endif; ?>
           <?php if (is_user() || is_admin()) : ?>

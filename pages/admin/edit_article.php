@@ -25,7 +25,6 @@ if (isset($_GET['id'])) {
   $photoApercu = $article['photo'];
   $prix = $article['prix'];
   $stock = $article['stock'];
-  $newPhotoUploaded = false;
   $_SESSION["editArticle"] = true;
 } else {
   $reference = '';
@@ -65,23 +64,83 @@ if (isset($_POST["reference"]) && isset($_POST["categorie"]) && isset($_POST["ti
   $photo = $_FILES["photo"];
   $photoName = $photo["name"];
   $photoTemp = $photo["tmp_name"];
-  $destination = "../../assets/img_produits/" . $photoName;
+  $destination = "../../assets/img_produits/";
 
-  if ($taille === "Choisissez la taille") {
-    $tailleError .= "Veuillez sélectionner la taille.";
-  }
-
-  if (!move_uploaded_file($photoTemp, $destination)) {
-    $photoError = "Une erreur c'est produite lors du téléchargement de la photo";
-  }
-
+  // Vérification de la photo
   if (!isset($_FILES['photo']) || $_FILES['photo']['error'] != UPLOAD_ERR_OK) {
     $photoError = "Veuillez sélectionner une photo.";
+  } else {
+    $allowedExtensions = array('jpg', 'jpeg', 'png');
+    $photoExtension = strtolower(pathinfo($photoName, PATHINFO_EXTENSION));
+
+    if (!in_array($photoExtension, $allowedExtensions)) {
+      $photoError = "Extension de fichier non valide. Les extensions autorisées sont : jpg, jpeg, png.";
+    } else {
+      $photoName = preg_replace('/[^a-zA-Z0-9_.-]/', '', strtolower($photoName));
+      $photoName = str_replace(' ', '_', $photoName);
+      $destination = $destination . $photoName;
+    }
   }
 
+  // Vérification de la référence
+  if (empty($reference)) {
+    $referenceError = "Veuillez sélectionner la référence.";
+  } elseif (!is_numeric($reference)) {
+    $referenceError = "La référence doit être composée uniquement de chiffres.";
+  } elseif (strlen($reference) > 15) {
+    $referenceError = "La référence doit être composée de 15 chiffres au maximum.";
+  } elseif (isset($_SESSION["editArticle"]) && verifCorrespondanceEditArticle($pdo, 'reference', $reference, $id_article)) {
+    $referenceError = "Cette référence est déjà utilisée.";
+  } elseif (!isset($_SESSION["editArticle"]) && verifCorrespondanceNewArticle($pdo, 'reference', $reference)) {
+    $referenceError = "Cette référence est déjà utilisée.";
+  }
+  // Vérification du titre
+  if (empty($titre)) {
+    $titreError = "Veuillez saisir un titre à l'article (nom).";
+  } elseif (strlen($titre) > 100) {
+    $titreError = "Le titre ne doit pas dépasser 100 caractères.";
+  }
+  // Vérification de la catégorie
+  if (empty($categorie) || $categorie == "Choisissez la catégorie") {
+    $categorieError = "La catégorie est obligatoire.";
+  }
+  // Vérification de la description
+  if (empty($description)) {
+    $descriptionError = "Veuillez saisir une descritption pour l'article.";
+  }
+  // Vérification de la couleur
+  if (empty($couleur)) {
+    $couleurError = "Veuillez saisir une couleur pour l'article.";
+  } elseif (!preg_match('/^[a-zA-Z]+$/', $couleur)) {
+    $couleurError = "La couleur ne doit contenir que des lettres.";
+  }
+  // Vérification de la taille
+  if (empty($taille) || $taille == "Choisissez la taille") {
+    $tailleError .= "Veuillez sélectionner la taille.";
+  }
+  // Vérification du sexe
+  if (empty($sexe) || $sexe == "Choisissez la sexe") {
+    $sexeError = "Le sexe est obligatoire.";
+  }
+  // Vérification du prix
+  if (empty($prix)) {
+    $prixError = "Veuillez saisir le prix de l'article.";
+  } elseif (!is_numeric($prix) || $prix <= 0) {
+    $prixError = "Le prix doit être un nombre positif.";
+  }
+  // Vérification du stock
+  if (empty($stock)) {
+    $stockError = "Veuillez saisir le stock actuel de l'article.";
+  } elseif (!is_numeric($stock) || $stock < 0) {
+    $stockError = "Le stock doit être un nombre positif.";
+  }
 
   // Insertion dans la BDD
   if (empty($referenceError) && empty($categorieError) && empty($titreError) && empty($descriptionError) && empty($couleurError) && empty($tailleError) && empty($sexeError) && empty($prixError) && empty($stockError)) {
+
+    if (!move_uploaded_file($photoTemp, $destination)) {
+      $photoError = "Une erreur s'est produite lors du téléchargement de la photo.";
+    }
 
     if (isset($_SESSION["editArticle"])) {
       $reponse = $pdo->prepare("UPDATE article SET reference = :reference, categorie = :categorie, titre = :titre, description = :description, couleur = :couleur, taille = :taille, sexe = :sexe, prix = :prix, stock = :stock, photo = IF(:newPhoto = '', photo, :newPhoto) WHERE id_article = :id");
@@ -116,7 +175,6 @@ if (isset($_POST["reference"]) && isset($_POST["categorie"]) && isset($_POST["ti
   }
 }
 
-
 require_once("../../inc/header.inc.php");
 require_once("../../inc/nav.inc.php");
 ?>
@@ -142,14 +200,15 @@ require_once("../../inc/nav.inc.php");
             <?php endif; ?>
           </div>
           <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Image :</label>
-          <input type="file" class="form-control mb-3" id="photo-input" name="photo" value="">
-          <div class="inscription-error"><?= $photoError ?></div>
+          <input type="file" class="form-control" id="photo-input" name="photo" value="">
+          <div class="inscription-error mb-4"><?= $photoError ?></div>
           <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Titre :</label>
-          <input type="text" class="form-control mb-3" id="titre" name="titre" placeholder="Titre" value="<?= $titre ?>">
+          <input type="text" class="form-control" id="titre" name="titre" placeholder="Titre" value="<?= $titre ?>">
+          <div class="inscription-error mb-4"><?= $titreError ?></div>
           <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Catégorie :</label>
-          <select class="form-select form-select-md mb-3" aria-label=".form-select-md example" id="categorie" name="categorie">
+          <select class="form-select form-select-md" aria-label=".form-select-md example" id="categorie" name="categorie">
             <option value="">Choisissez une catégorie</option>
-            <option value="tee-shirt" <?= ($categorie === 'tee-shirt') ? 'selected' : '' ?>>Tee-shirt</option>
+            <option value="tee-shirt" <?= ($categorie === 't-shirt') ? 'selected' : '' ?>>T-shirt</option>
             <option value="chemise" <?= ($categorie === 'chemise') ? 'selected' : '' ?>>Chemise</option>
             <option value="polo" <?= ($categorie === 'polo') ? 'selected' : '' ?>>Polo</option>
             <option value="veste" <?= ($categorie === 'veste') ? 'selected' : '' ?>>Veste</option>
@@ -159,16 +218,23 @@ require_once("../../inc/nav.inc.php");
             <option value="robe" <?= ($categorie === 'robe') ? 'selected' : '' ?>>Robe</option>
             <option value="jupe" <?= ($categorie === 'jupe') ? 'selected' : '' ?>>Jupe</option>
           </select>
+          <div class="inscription-error mb-4"><?= $categorieError ?></div>
           <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Description :</label>
-          <input type="text" class="form-control mb-3" id="description" name="description" placeholder="Description" value="<?= $description ?>">
+          <input type="text" class="form-control" id="description" name="description" placeholder="Description" value="<?= $description ?>">
+          <div class="inscription-error mb-4"><?= $descriptionError ?></div>
         </div>
+
+
+
         <div class="col-5 ms-auto mt-4">
           <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Référence (unique) :</label>
-          <input type="text" class="form-control mb-4" id="reference" name="reference" placeholder="Référence" value="<?= $reference ?>">
+          <input type="text" class="form-control" id="reference" name="reference" placeholder="Référence" value="<?= $reference ?>">
+          <div class="inscription-error mb-4"><?= $referenceError ?></div>
           <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Couleur :</label>
-          <input type="text" class="form-control mb-4" id="couleur" name="couleur" placeholder="Couleur" value="<?= $couleur ?>">
+          <input type="text" class="form-control" id="couleur" name="couleur" placeholder="Couleur" value="<?= $couleur ?>">
+          <div class="inscription-error mb-4"><?= $couleurError ?></div>
           <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Taille :</label>
-          <select class="form-select form-select-md mb-4" aria-label=".form-select-md example" name="taille">
+          <select class="form-select form-select-md" aria-label=".form-select-md example" name="taille">
             <option value="">Choisissez la taille</option>
             <option value="XS" <?= ($taille === 'XS') ? 'selected' : '' ?>>XS</option>
             <option value="S" <?= ($taille === 'S') ? 'selected' : '' ?>>S</option>
@@ -176,16 +242,20 @@ require_once("../../inc/nav.inc.php");
             <option value="L" <?= ($taille === 'L') ? 'selected' : '' ?>>L</option>
             <option value="XL" <?= ($taille === 'XL') ? 'selected' : '' ?>>XL</option>
           </select>
+          <div class="inscription-error mb-4"><?= $tailleError ?></div>
           <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Sexe :</label>
-          <select class="form-select form-select-md mb-4" aria-label=".form-select-md example" name="sexe">
+          <select class="form-select form-select-md" aria-label=".form-select-md example" name="sexe">
             <option value="">Choisissez le sexe</option>
             <option value="m" <?= ($sexe === 'm') ? 'selected' : '' ?>>Homme</option>
             <option value="f" <?= ($sexe === 'f') ? 'selected' : '' ?>>Femme</option>
           </select>
+          <div class="inscription-error mb-4"><?= $sexeError ?></div>
           <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Prix :</label>
-          <input type="number" class="form-control mb-4" id="prix" name="prix" placeholder="Prix" value="<?= $prix ?>">
+          <input type="number" class="form-control" id="prix" name="prix" placeholder="Prix" value="<?= $prix ?>">
+          <div class="inscription-error mb-4"><?= $prixError ?></div>
           <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Stock :</label>
-          <input type="number" class="form-control mb-4" id="stock" name="stock" placeholder="Stock" value="<?= $stock ?>">
+          <input type="number" class="form-control" id="stock" name="stock" placeholder="Stock" value="<?= $stock ?>">
+          <div class="inscription-error mb-4"><?= $stockError ?></div>
         </div>
       </div>
 
