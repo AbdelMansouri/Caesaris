@@ -32,7 +32,7 @@ require_once("../../inc/nav.inc.php");
 ?>
 
 
-  <div class="container" id="sign-in-form">
+  <div class="container min-height">
     <div class="row">
       <div class="col-6 mx-auto mt-5">
         <h1>Connexion</h1>

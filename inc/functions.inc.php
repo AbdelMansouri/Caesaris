@@ -75,11 +75,27 @@ function calculerTotalPanier()
 
   if (isset($_SESSION['cart'])) {
     foreach ($_SESSION['cart'] as $cart_item) {
-      $prix_article = $cart_item['article']['prix'];
+      $prix_article = $cart_item['prix'];
       $quantite = $cart_item['quantity'];
       $total += $prix_article * $quantite;
     }
   }
 
   return $total;
+}
+
+function supprimerArticlePanier($id_article)
+{
+  if (!isset($_SESSION['cart'])) {
+    return;
+  }
+
+  foreach ($_SESSION['cart'] as $index => $cart_item) {
+    if ($cart_item['id'] === $id_article) {
+      unset($_SESSION['cart'][$index]);
+      break;
+    }
+  }
+
+  $_SESSION['cart'] = array_values($_SESSION['cart']);
 }

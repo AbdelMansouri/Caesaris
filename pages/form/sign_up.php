@@ -243,7 +243,6 @@ require_once("../../inc/nav.inc.php");
     </div>
   </div>
 
-
 <?php
 require_once("../../inc/footer.inc.php");
 ?>

@@ -12,19 +12,30 @@ if (isset($_GET['id'])) {
   header("Location: " . URL . "shop.php");
   exit;
 }
+
 if (isset($_POST['quantity']) && is_numeric($_POST['quantity'])) {
   $quantity = $_POST['quantity'];
 
   if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
   }
-  
-  $cart_item = array(
-    'id' => $id_article,
-    'quantity' => $quantity
-  );
 
-  $_SESSION['cart'][] = $cart_item;
+  // L'article existe déjà dans la session ?
+  $articleExistant = array_search($id_article, array_column($_SESSION['cart'], 'id'));
+
+  if ($articleExistant !== false) {
+    $_SESSION['cart'][$articleExistant]['quantity'] += $quantity;
+  } else {
+    $cart_item = array(
+      'id' => $article['id_article'],
+      "photo" => $article['photo'],
+      "titre" => $article['titre'],
+      "prix" => $article['prix'],
+      'quantity' => $quantity
+    );
+
+    $_SESSION['cart'][] = $cart_item;
+  }
 }
 
 

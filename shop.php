@@ -43,9 +43,9 @@ require_once("inc/nav.inc.php");
               <a href="?categorie=Chemise&sexe=m" class="list-group-item">Chemises</a>
               <a href="?categorie=polo&sexe=m" class="list-group-item">Polos</a>
               <a href="?categorie=Veste&sexe=m" class="list-group-item">Vestes</a>
-              <a href="?categorie=Manteaux&sexe=m" class="list-group-item">Manteaux</a>
-              <a href="?categorie=Pantalons&sexe=m" class="list-group-item">Pantalons</a>
-              <a href="?categorie=Jeans&sexe=m" class="list-group-item">Jeans</a>
+              <a href="?categorie=Manteau&sexe=m" class="list-group-item">Manteaux</a>
+              <a href="?categorie=Pantalon&sexe=m" class="list-group-item">Pantalons</a>
+              <a href="?categorie=Jean&sexe=m" class="list-group-item">Jeans</a>
             </div>
           </div>
         </div>
@@ -58,14 +58,14 @@ require_once("inc/nav.inc.php");
           <div id="femme-collapse" class="accordion-collapse collapse">
             <div class="accordion-body">
               <a href="?sexe=f" class="list-group-item">Tout les articles</a>
-              <a href="?categorie=T-shirts&sexe=f" class="list-group-item">T-shirts</a>
-              <a href="?categorie=Chemises&sexe=f" class="list-group-item">Chemises</a>
-              <a href="?categorie=Robes&sexe=f" class="list-group-item">Robes</a>
-              <a href="?categorie=Jupes&sexe=f" class="list-group-item">Jupes</a>
-              <a href="?categorie=Vestes&sexe=f" class="list-group-item">Vestes</a>
-              <a href="?categorie=Manteaux&sexe=f" class="list-group-item">Manteaux</a>
-              <a href="?categorie=Pantalons&sexe=f" class="list-group-item">Pantalons</a>
-              <a href="?categorie=Jeans&sexe=f" class="list-group-item">Jeans</a>
+              <a href="?categorie=T-shirt&sexe=f" class="list-group-item">T-shirts</a>
+              <a href="?categorie=Chemise&sexe=f" class="list-group-item">Chemises</a>
+              <a href="?categorie=Robe&sexe=f" class="list-group-item">Robes</a>
+              <a href="?categorie=Jupe&sexe=f" class="list-group-item">Jupes</a>
+              <a href="?categorie=Veste&sexe=f" class="list-group-item">Vestes</a>
+              <a href="?categorie=Manteau&sexe=f" class="list-group-item">Manteaux</a>
+              <a href="?categorie=Pantalon&sexe=f" class="list-group-item">Pantalons</a>
+              <a href="?categorie=Jean&sexe=f" class="list-group-item">Jeans</a>
             </div>
           </div>
         </div>
