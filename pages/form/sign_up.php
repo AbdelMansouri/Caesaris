@@ -1,6 +1,12 @@
 <?php
 require_once("../../inc/init.inc.php");
 require_once("../../inc/functions.inc.php");
+
+if ((is_user() || is_admin())) {
+  header("Location: " . URL . "index.php");
+  exit;
+}
+
 // Formulaire d'inscription
 $sexeError = "";
 $pseudoError = "";
@@ -161,6 +167,7 @@ if (isset($_POST["email"]) && isset($_POST["pseudo"]) && isset($_POST["email-con
   }
 }
 
+$title = "- Inscription";
 require_once("../../inc/header.inc.php");
 require_once("../../inc/nav.inc.php");
 ?>

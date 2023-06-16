@@ -72,6 +72,7 @@ function verifCorrespondanceNewArticle($pdo, $colonne, $valeur)
 function calculerTotalPanier()
 {
   $total = 0;
+  $totalSansFrais = 0;
 
   if (isset($_SESSION['cart'])) {
     foreach ($_SESSION['cart'] as $cart_item) {
@@ -81,8 +82,23 @@ function calculerTotalPanier()
     }
   }
 
-  return $total;
+  if ($total >= 30) {
+    $totalSansFrais = $total;
+    $fraisLivraison = 0;
+  } else {
+    $totalSansFrais = $total;
+    $fraisLivraison = 5;
+    $total += $fraisLivraison;
+  }
+
+  return [
+    'total' => $total,
+    'totalSansFrais' => $totalSansFrais,
+    'fraisLivraison' => $fraisLivraison
+  ];
 }
+
+
 
 function supprimerArticlePanier($id_article)
 {

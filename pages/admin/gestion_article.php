@@ -1,7 +1,7 @@
 <?php
 require_once("../../inc/init.inc.php");
 require_once("../../inc/functions.inc.php");
-$title = "- Gestion des articles";
+
 if (!is_admin()) {
   header("Location: " . URL . "pages/form/sign_in.php");
   exit;
@@ -15,6 +15,7 @@ if (isset($_POST['supprimer'])) {
   header("Location:" . URL . "pages/admin/gestion_article.php");
 }
 
+$title = "- Gestion des articles";
 require_once("../../inc/header.inc.php");
 require_once("../../inc/nav.inc.php");
 ?>
@@ -24,7 +25,7 @@ require_once("../../inc/nav.inc.php");
     <h1 class="text-center mb-3">Gestion de la boutique</h1>
     <div class="container">
       <div class="card mb-5">
-          <a href="<?= URL ?>pages/admin/edit_article.php" class="btn btn-secondary w-25 m-3 mx-auto">Ajouter un article</a>
+        <a href="<?= URL ?>pages/admin/edit_article.php" class="btn btn-secondary w-25 m-3 mx-auto">Ajouter un article</a>
       </div>
     </div>
     <div class="table-responsive ps-5 pe-5">

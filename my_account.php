@@ -1,7 +1,7 @@
 <?php
 require_once("inc/init.inc.php");
 require_once("inc/functions.inc.php");
-$title = "- Mon Compte";
+
 if (!(is_user() || is_admin())) {
   header("Location: " . URL . "pages/form/sign_in.php");
   exit;
@@ -35,7 +35,6 @@ if (isset($_POST["prenom"]) && isset($_POST["nom"]) && isset($_POST["sexe"])) {
     $nomError = "Le nom ne doit contenir que des lettres alphabétiques et des espaces.";
   }
 
-
   // Vérification du prenom
   if (empty($prenom)) {
     $prenomError = "Veuillez saisir votre prénom.";
@@ -55,50 +54,9 @@ if (isset($_POST["prenom"]) && isset($_POST["nom"]) && isset($_POST["sexe"])) {
     $_SESSION["userData"]["nom"] = $nom;
     $_SESSION["userData"]["prenom"] = $prenom;
     $_SESSION["userData"]["sexe"] = $sexe;
-    // header("location :" . URL . "my_account.php");
+    header("location :" . URL . "my_account.php");
   }
 }
-
-// // Pramètrage du formulaire Connexion et sécurité
-// if (isset($_POST["pseudo"]) && isset($_POST["email"])) {
-//   $pseudo = secureHtml(trim($_POST["pseudo"]));
-//   $email = secureHtml(trim($_POST["email"]));
-
-//   // Vérification du pseudo (doit être unique)
-//   if (empty($pseudo)) {
-//     $pseudoError = "Veuillez saisir un pseudo.";
-//   } elseif (strlen($pseudo) < 3 || strlen($pseudo) > 15) {
-//     $pseudoError = "Le pseudo doit avoir entre 3 et 15 caractères.";
-//   } elseif (verifCorrespondance($pdo, 'pseudo', $pseudo)) {
-//     $pseudoError = "Ce pseudo est déjà utilisé.";
-//   }
-//   $pattern = "/^[a-zA-Z0-9\.\-_]+$/";
-//   if (!empty($pseudo) && !preg_match($pattern, $pseudo)) {
-//     $pseudoError = "Caractères autorisés : lettres (majuscules et minuscules), chiffres, point, tiret (-) et underscore (_).";
-//   }
-
-//   // Vérification de l'email
-//   if (empty($email)) {
-//     $emailError = "Veuillez saisir une adresse email.";
-//   } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-//     $emailError = "Veuillez saisir une adresse email valide.";
-//   } elseif (verifCorrespondance($pdo, 'email', $email)) {
-//     $emailError = "Cet email est déjà utilisé.";
-//   }
-
-//   // Vérification globale des erreurs
-//   if (empty($pseudoError) && empty($emailError) && empty($mdpError)) {
-
-//     $reponse = $pdo->prepare("UPDATE membre SET pseudo = :pseudo, email = :email WHERE id_membre = :id_membre");
-//     $reponse->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
-//     $reponse->bindParam(':email', $email, PDO::PARAM_STR);
-//     $reponse->bindParam(':id_membre', $_SESSION["userData"]["id_membre"], PDO::PARAM_INT);
-//     $reponse->execute();
-//     $_SESSION["userData"]["pseudo"] = $pseudo;
-//     $_SESSION["userData"]["email"] = $email;
-//     // header("location :" . URL . "my_account.php");
-//   }
-// }
 
 // Pramètrage du formulaire Informations de livraison
 if (isset($_POST["adresse"]) && isset($_POST["ville"]) && isset($_POST["cp"])) {
@@ -136,10 +94,11 @@ if (isset($_POST["adresse"]) && isset($_POST["ville"]) && isset($_POST["cp"])) {
     $_SESSION["userData"]["adresse"] = $adresse;
     $_SESSION["userData"]["ville"] = $ville;
     $_SESSION["userData"]["cp"] = $cp;
-    // header("location :" . URL . "my_account.php");
+    header("location :" . URL . "my_account.php");
   }
 }
 
+$title = "- Votre Compte";
 require_once("inc/header.inc.php");
 require_once("inc/nav.inc.php");
 ?>
@@ -147,7 +106,7 @@ require_once("inc/nav.inc.php");
 
   <div class="container" id="my-account">
     <div class="col-6 mx-auto">
-      <h1 class="text-center mb-3">Mon compte</h1>
+      <h1 class="text-center mb-3">Votre compte</h1>
 
       <?php if (isset($_GET['edit']) && $_GET['edit'] === 'infos') : ?>
         <div class="card rounded-0 mb-5">

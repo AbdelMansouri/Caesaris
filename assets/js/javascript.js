@@ -1,3 +1,4 @@
+// Chargement dynamique de l'image côté back
 document
   .getElementById("photo-input")
   .addEventListener("change", function (event) {
@@ -5,3 +6,5 @@ document
     var imageURL = URL.createObjectURL(file);
     document.getElementById("article-image").src = imageURL;
   });
+
+

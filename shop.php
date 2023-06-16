@@ -1,7 +1,7 @@
 <?php
 require_once("inc/init.inc.php");
 require_once("inc/functions.inc.php");
-$title = "- Boutique en ligne";
+
 if (isset($_GET['categorie']) && isset($_GET['sexe'])) {
   $categorie = $_GET['categorie'];
   $sexe = $_GET['sexe'];
@@ -20,6 +20,8 @@ if (isset($_GET['categorie']) && isset($_GET['sexe'])) {
   $requete = $pdo->query("SELECT * FROM article");
   $articles = $requete->fetchAll(PDO::FETCH_ASSOC);
 }
+
+$title = "- Shop";
 require_once("inc/header.inc.php");
 require_once("inc/nav.inc.php");
 ?>
@@ -84,9 +86,11 @@ require_once("inc/nav.inc.php");
                   </div>
                 </a>
                 <div class="card-body d-flex flex-column">
-                  <h5 class="card-title"><?= $article['titre'] ?></h5>
-                  <p class="card-text">Prix: <?= $article['prix'] ?> €</p>
-                  <p class="card-text">Catégorie: <?= $article['categorie'] ?></p>
+                  <a class="mb-0 article-card" href="<?= URL ?>shop.php?categorie=<?= $article['categorie'] ?>&sexe=<?= $article['sexe'] ?>">Caesaris - <?= $article['categorie'] ?></a>
+                  <a href="<?= URL ?>details_article.php?id=<?= $article['id_article'] ?>">
+                    <h5 class="card-title article-card-title mb-0"><?= $article['titre'] ?></h5>
+                  </a>
+                  <p class="card-text article-card"><?= $article['prix'] ?> €</p>
                 </div>
               </div>
             </div>

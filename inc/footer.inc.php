@@ -1,7 +1,7 @@
 <footer id="footer">
   <div class="container d-flex pt-5">
     <div class="col-4 d-none d-lg-flex justify-content-center align-items-center">
-      <h3>Caesaris</h1>
+      <h3>CAESARIS</h1>
     </div>
     <div class="col-12 col-lg-4 d-flex flex-column justify-content-center align-items-center">
       <h5>Liens rapides</h5>

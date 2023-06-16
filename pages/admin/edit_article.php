@@ -1,7 +1,6 @@
 <?php
 require_once("../../inc/init.inc.php");
 require_once("../../inc/functions.inc.php");
-$title = "- Gestion des articles";
 $titre = "";
 
 if (!is_admin()) {
@@ -26,6 +25,7 @@ if (isset($_GET['id'])) {
   $prix = $article['prix'];
   $stock = $article['stock'];
   $_SESSION["editArticle"] = true;
+  $title = "- " . $article['titre'];
 } else {
   $reference = '';
   $categorie = '';
@@ -37,6 +37,7 @@ if (isset($_GET['id'])) {
   $photoApercu = '';
   $prix = '';
   $stock = '';
+  $title = "- Ajout d'article";
 }
 
 $referenceError = '';
@@ -174,6 +175,7 @@ if (isset($_POST["reference"]) && isset($_POST["categorie"]) && isset($_POST["ti
     }
   }
 }
+
 
 require_once("../../inc/header.inc.php");
 require_once("../../inc/nav.inc.php");

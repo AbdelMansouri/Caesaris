@@ -33,9 +33,18 @@ html body h5 {
   font-family: "Abhaya-Bold", serif;
   font-size: 3.8rem;
 }
+
+html body h1 {
+  font-size: 2.5rem;
+}
 /* Couleurs */
 body .bg-p {
   background-color: rgb(8, 14, 106);
+  color: white;
+}
+body .bg-ps {
+  background-color: rgb(4, 30, 58);
+  color: white;
 }
 .bg-s {
   background-color: rgb(254, 173, 32);
@@ -45,6 +54,16 @@ body .bg-p {
 }
 .text-s {
   color: rgb(254, 173, 32);
+}
+.a-text {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+}
+.a-text-muted {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
 }
 
 /* Taille */
@@ -56,8 +75,16 @@ body .bg-p {
   font-size: 2rem;
 }
 
+.text-15 {
+  font-size: 1.5rem;
+}
+
 .text-1 {
   font-size: 1rem;
+}
+
+.text-08 {
+  font-size: 0.8rem;
 }
 
 body .min-height {
@@ -109,6 +136,8 @@ body .btn-danger {
   font-size: 0.9rem;
 }
 
+#promo {
+}
 /* ----------------CONTENT--------------------- */
 
 #my-account .card img {
@@ -149,12 +178,8 @@ body .btn-danger {
   max-width: 220px;
 }
 
-#shop h5 {
-  font-size: 2rem;
-}
-
 #shop .card-image-container {
-  height: 200px; 
+  height: 200px;
   overflow: hidden;
 }
 
@@ -166,6 +191,44 @@ body .btn-danger {
 
 #cart h5 {
   font-size: 2rem;
+}
+
+#sign-in .line-height1 {
+  line-height: 40px;
+}
+
+#cart .total {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+#cart .cart-card {
+  max-height: 200px;
+}
+
+#cart .cart-card img {
+  max-height: 190px;
+}
+
+#cart .modificateur {
+  line-height: 20px;
+}
+
+body .article-card-title {
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+body #shop .article-card-title {
+  text-decoration: none;
+  text-decoration-line: none;
+}
+
+.article-card {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 /* ----------------FOOTER--------------------- */
